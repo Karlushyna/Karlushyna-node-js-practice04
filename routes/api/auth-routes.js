@@ -11,5 +11,7 @@ const {schemas} = require("../../models/user")
 //register or signup
 router.post("/register", validateBody(schemas.registerSchema), ctrl.register)
 
+//signin
+router.post("/login", validateBody(schema.loginSchema), ctrl.login)
 
 module.exports = router;
