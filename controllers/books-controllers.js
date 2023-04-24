@@ -5,7 +5,10 @@ const {Book} = require("../models/book");
 const { HttpError } = require("../helpers");
 
 const getAllBooks = async (req, res) => {
-    const result = await Book.find({}, "-createdAt -updatedAt");
+    const {_id: owner} = req.user;
+    const {page = 1, limit = 10} = req.query;
+    const skip = (page -1) * limit;
+    const result = await Book.find({owner}, "-createdAt -updatedAt", {skip, limit}).populate("owner", "name email");
     res.json(result);
 }
 
@@ -20,8 +23,10 @@ const getBookById = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-    const result = await Book.create(req.body);
+    const {_id: owner} = req.user;
+    const result = await Book.create({...req.body, owner});
     res.status(201).json(result);
+
 }
 
 const updateBookById = async (req, res) => {
