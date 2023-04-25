@@ -5,6 +5,7 @@ const {handleMongooseError} = require("../utils");
 
 const emailRegerxp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+//schema
 const userSchema = new Schema({
     name: {
         type: String,
